@@ -12,7 +12,31 @@
     - The merchants are not fools. They will not visit a trading post if it is worse than any of the others they have already visited. For example, a merchant will visit the trading posts 1,3,4,n in that order. However, if the 3 trading post preceeded the 1, then they would skip the 1 (and only visit the 3,4,n posts).
     - The only information the merchants will give you is the total number of posts they visit on their route.
 -}
+import Data.List
 
+-- comes in row form
+-- we can get columns with transpose [[Int]]
+-- use permutations [Int] to generate rows and check if conform
 zed :: ([Int],[Int],[Int],[Int]) -> [[Int]]
-zed ([],[],[],[]) = [[]]
 zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
+-- row stop = row_stop forth second
+-- column stop = column_stop first third
+
+-- counts the number of trade stops for a given line/column
+-- given the list and the maximum in the list
+trades :: [Int] -> Int -> Int
+trades [] sum = sum
+trades [a] sum = sum + 1
+trades (a:b:t) sum
+    | a < b = sum + 1 + trades (b:t) sum
+    | otherwise = sum + trades (b:t) sum
+
+-- validate matrx to see if the trade stops are correct
+
+-- get row stop pairs for validation
+column_stops :: ([Int],[Int]) -> [(Int,Int)]
+column_stops (x,y) = zip x $ reverse y
+
+-- get column stop pairs for validation
+row_stop :: ([Int],[Int]) -> [(Int,Int)]
+row_stop (x,y) = zip (reverse y) x
