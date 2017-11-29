@@ -22,21 +22,27 @@ zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[
 -- row stop = row_stop forth second
 -- column stop = column_stop first third
 
--- counts the number of trade stops for a given line/column
--- given the list and the maximum in the list
+-- | counts the number of trade stops for a given line/column
+-- It takes the list and the running sum
 trades :: [Int] -> Int -> Int
-trades [] sum = sum
-trades [a] sum = sum + 1
+trades [] _ = 1
+trades [a] _ = 1
 trades (a:b:t) sum
-    | a < b = sum + 1 + trades (b:t) sum
-    | otherwise = sum + trades (b:t) sum
+    | a < b = sum + 1 + trades (maximum [a,b]:t) sum
+    | otherwise = sum + trades (maximum [a,b]:t) sum
 
--- validate matrx to see if the trade stops are correct
+-- | validate row/colum to see if the trade stops are correct
+-- It takes the row/column and the the stop pair for the row/column
+validate :: [Int] -> (Int,Int) -> Bool
+validate list (f_stops,b_stops) 
+    | (trades list 0 == f_stops) 
+        && (trades (reverse list) 0 == b_stops) = True
+    | otherwise = False
 
--- get row stop pairs for validation
+-- | get row stop pairs for validation
 column_stops :: ([Int],[Int]) -> [(Int,Int)]
 column_stops (x,y) = zip x $ reverse y
 
--- get column stop pairs for validation
+-- | get column stop pairs for validation
 row_stop :: ([Int],[Int]) -> [(Int,Int)]
 row_stop (x,y) = zip (reverse y) x
