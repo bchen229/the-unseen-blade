@@ -121,12 +121,22 @@ colStops (x,y) = zip x $ reverse y
 listSelect :: [[Int]] -> (Int,Int) -> [[Int]]
 listSelect lists (f,b) = [ x | x <- lists, validate x (f,b) ]
 
+-- | given a list of lists, creates permutations by selecting
+-- elements from each list
+-- eg. [[1,2],[3,4]] would return [[1,3],[1,4],[2,3],[2,4]]
+gen :: [[a]] -> [[a]]
+gen []  = []
+gen [l] = [[e] | e <- l]
+gen (l:ls) = do
+    x <- l
+    map (x:) (gen ls)
+
 -- | takes in stop pairs generates a list of list of possible
 -- selection for each matrix row
 matrixGen4 :: [(Int,Int)] -> [[[Int]]]
 matrixGen4 pairs =
     let p = [ x | x <- [ listSelect (permutations [1..(length pairs)]) (f,b) | (f,b) <- pairs ] ]
-    in [ [a,b,c,d] | a <- p!!0, b <- p!!1, c <- p!!2, d <- p!!3 ]
+    in gen p
         
 -- | takes in a list of matrices and transposes and checks the stops constraints
 -- returns the correct matrix
