@@ -65,8 +65,8 @@ validateBoard board index rowStops columnStops
             cColStop = columnStops !! index
 
 -- Return all possible valid board for a Zed game when given the outter border value
-zed :: ([Int],[Int],[Int],[Int]) -> [[Int]]
-zed (top,right,bottom,left) =
+zed2 :: ([Int],[Int],[Int],[Int]) -> [[Int]]
+zed2 (top,right,bottom,left) =
     -- go thru all possible board and find those are satify stop conditions, return the first 1 that does
     head $ filter (\board -> validateBoard board (boardSize - 1) rs cs) possibleBoards
         where

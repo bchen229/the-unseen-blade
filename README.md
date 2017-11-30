@@ -20,5 +20,5 @@ Further explanation can be found at: http://www.cs.sfu.ca/CourseCentral/383/pjj/
 zed.hs generates the solution by first generating rows that match the conditions and then creating matrices of the rows.
 Then it would verify the matrices by applying the conditions on the columns. 
 
-test.hs first generates all permutations of matrices that do not have duplicate rows. Then applies conditions to the rows and columns, which is more of a brute force approach.
+zed2.hs first generates all permutations of matrices that do not have duplicate rows. Then applies conditions to the rows and columns, which is more of a brute force approach.
 **
