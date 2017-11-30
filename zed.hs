@@ -75,3 +75,20 @@ column_stops (x,y) = zip x $ reverse y
 -- | get column stop pairs for validation
 row_stop :: ([Int],[Int]) -> [(Int,Int)]
 row_stop (x,y) = zip (reverse y) x
+
+-- GENERAL HELPER FUNCTIONS
+
+-- replace element at index in a list
+replaceInList new index (h:t)
+     | index == 0 = new:t
+     | otherwise = h:replaceInList (index-1) new t
+
+-- delete element list (Data.List)
+-- removes first instance of element from list
+
+-- Tuple helper functions
+-- gets the t_nth element of 4 part tuples
+t_1 (t, _, _, _) = t
+t_2 (_, t, _, _) = t
+t_3 (_, _, t, _) = t
+t_4 (_, _, _, t) = t
