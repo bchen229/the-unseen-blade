@@ -47,11 +47,11 @@ import Data.List
 -- we can get columns with transpose [[Int]]
 -- use permutations [Int] to generate rows and check if conform
 -- zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
-zed :: ([Int],[Int],[Int],[Int]) -> [[Int]]
+zed :: ([Int],[Int],[Int],[Int]) -> IO()
 zed (top,right,bottom,left) = 
     let rc = row_stops (left,right)
         cc = col_stops (top,bottom)
-    in matrix_solve (matrix_gen_4 rc) cc 
+    in mapM_ print (matrix_solve (matrix_gen_4 rc) cc)
 
 -- row stop = row_stop forth second
 -- column stop = column_stop first third
