@@ -43,23 +43,12 @@ Solution:
 -}
 import Data.List
 
-matrixSize = 4
-
-possibleValues = [1..matrixSize]
-
--- are we doing this for constraint propagation?
-newMatrix = [
-    [possibleValues, possibleValues, possibleValues, possibleValues],
-    [possibleValues, possibleValues, possibleValues, possibleValues],
-    [possibleValues, possibleValues, possibleValues, possibleValues],
-    [possibleValues, possibleValues, possibleValues, possibleValues]
-    ]
-
 -- comes in row form
 -- we can get columns with transpose [[Int]]
 -- use permutations [Int] to generate rows and check if conform
 zed :: ([Int],[Int],[Int],[Int]) -> [[Int]]
 zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
+
 -- row stop = row_stop forth second
 -- column stop = column_stop first third
 
@@ -80,27 +69,12 @@ validate list (f_stops,b_stops)
         && (trades (reverse list) 0 == b_stops) = True
     | otherwise = False
 
+-- | get column stop pairs for validation
+row_stops :: ([Int],[Int]) -> [(Int,Int)]
+row_stops (x,y) = zip x $ reverse y
+
 -- | get row stop pairs for validation
 column_stops :: ([Int],[Int]) -> [(Int,Int)]
-column_stops (x,y) = zip x $ reverse y
+column_stops (x,y) = zip (reverse y) x
 
--- | get column stop pairs for validation
-row_stop :: ([Int],[Int]) -> [(Int,Int)]
-row_stop (x,y) = zip (reverse y) x
-
--- GENERAL HELPER FUNCTIONS
-
--- replace element at index in a list
-replaceInList new index (h:t)
-     | index == 0 = new:t
-     | otherwise = h:replaceInList (index-1) new t
-
--- delete element list (Data.List)
--- removes first instance of element from list
-
--- Tuple helper functions
--- gets the t_nth element of 4 part tuples
-t_1 (t, _, _, _) = t
-t_2 (_, t, _, _) = t
-t_3 (_, _, t, _) = t
-t_4 (_, _, _, t) = t
+matrix_gen :: Int -> [[Int]]
