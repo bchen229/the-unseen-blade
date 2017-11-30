@@ -11,6 +11,35 @@
     - Along the way, the merchants visit other trading posts in order to lighten their load. 
     - The merchants are not fools. They will not visit a trading post if it is worse than any of the others they have already visited. For example, a merchant will visit the trading posts 1,3,4,n in that order. However, if the 3 trading post preceeded the 1, then they would skip the 1 (and only visit the 3,4,n posts).
     - The only information the merchants will give you is the total number of posts they visit on their route.
+
+Format: The clues are given as a 4-tuple of lists, with one list for each side of the grid. 
+The first number corresponds with the top left merchant
+(i.e., most western on the northern border), and continue in a clockwise direction. 
+The output is a list of lists, where each entry is a row of the map, going from north to south. 
+The example function call below corresponds with the visual example below. 
+
+zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
+([top >], [right v], [bottom <], [left ^]) 
+The symbols indicate which direction you're supposed to visualize the numbers
+
+Initial visualization of the puzzle
+       1 3 2 2
+1                  3
+3                  2
+2                  1
+2                  2
+       3 1 2 2
+
+Solution:
+       1 3 2 2
+
+1      4 1 3 2     3
+3      2 3 4 1     2
+2      3 2 4 1     1
+2      1 4 2 3     2
+
+       3 1 2 2
+
 -}
 import Data.List
 
