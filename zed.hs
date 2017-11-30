@@ -73,6 +73,7 @@ appendStops mx rs cs =
 -- printMatrix code in reference to author's codepad: http://codepad.org/48Vxg7hZ
 -- author: https://stackoverflow.com/users/1106679/david
 -- Prints the matrix
+showMatrix :: [[Int]] -> String
 showMatrix = destructList " " . (map (map show))
 
 -- converts [[a,a,a],[b,b,b]] where inner list is separated by spaces 
