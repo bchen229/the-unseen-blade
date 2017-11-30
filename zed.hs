@@ -51,14 +51,16 @@ zed :: ([Int],[Int],[Int],[Int]) -> IO()
 zed (top,right,bottom,left) = 
     let rc = row_stops (left,right)
         cc = col_stops (top,bottom)
-        [r1, r2, r3, r4] = (matrix_solve (matrix_gen_4 rc) cc)
-        outputMatrix = 
+        outputMatrix = (matrix_solve (matrix_gen_4 rc) cc) 
+        -- removed [r1, r2, r3, r4] to prepare for solving NxN
+            {-
             [[0]++top++[0]]++
             [[left!!3]++r1++[right!!0],
             [left!!2]++r2++[right!!1],
             [left!!1]++r3++[right!!2],
             [left!!0]++r4++[right!!3]]++
             [[0]++bottom++[0]]
+            -}
     in putStrLn [ if x == '0' then ' ' else x | x <- (showMatrix outputMatrix)]
 
 -- printMatrix code in reference to author's codepad: http://codepad.org/48Vxg7hZ
