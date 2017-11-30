@@ -103,7 +103,6 @@ matrix_gen_4 pairs =
         
 -- | takes in a list of matrices and transposes and checks the stops constraints
 -- returns the correct matrix
--- BUG HERE
 matrix_solve :: [[[Int]]] -> [(Int,Int)] -> [[Int]]
 matrix_solve matrices pairs = head ([ x | x <- matrices, validate_matrix (transpose x) pairs ])
 
