@@ -23,6 +23,7 @@ trades :: [Int] -> Int -> Int
 trades [] _ = 1
 trades [a] _ = 1
 trades (a:b:t) sum
+    | a == b = -sum
     | a < b = sum + 1 + trades (maximum [a,b]:t) sum
     | otherwise = sum + trades (maximum [a,b]:t) sum
 
