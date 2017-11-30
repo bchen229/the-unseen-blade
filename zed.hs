@@ -51,7 +51,25 @@ zed :: ([Int],[Int],[Int],[Int]) -> IO()
 zed (top,right,bottom,left) = 
     let rc = row_stops (left,right)
         cc = col_stops (top,bottom)
-    in mapM_ print (matrix_solve (matrix_gen_4 rc) cc)
+        [r1, r2, r3, r4] = (matrix_solve (matrix_gen_4 rc) cc)
+        outputMatrix = 
+            [[0]++top++[0]]++
+            [[left!!3]++r1++[right!!0],
+            [left!!2]++r2++[right!!1],
+            [left!!1]++r3++[right!!2],
+            [left!!0]++r4++[right!!3]]++
+            [[0]++bottom++[0]]
+    in putStrLn [ if x == '0' then ' ' else x | x <- (showMatrix outputMatrix)]
+
+-- printMatrix code in reference to author's codepad: http://codepad.org/48Vxg7hZ
+-- author: https://stackoverflow.com/users/1106679/david
+-- Prints the matrix
+showMatrix = destructList " " . (map (map show))
+
+-- converts [[a,a,a],[b,b,b]] where inner list is separated by spaces 
+-- whereas the lists are separated by new lines
+destructList :: String -> [[String]] -> String
+destructList replaceComma = intercalate "\n" . map (intercalate replaceComma)
 
 -- row stop = row_stop forth second
 -- column stop = column_stop first third
