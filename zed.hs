@@ -47,20 +47,28 @@ import Data.List
 -- we can get columns with transpose [[Int]]
 -- use permutations [Int] to generate rows and check if conform
 -- zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
-zed :: ([Int],[Int],[Int],[Int]) -> IO()
+zed :: ([Int],[Int],[Int],[Int]) -> IO() 
 zed (top,right,bottom,left) = 
     let rc = rowStops (left,right)
         cc = colStops (top,bottom)
-        outputMatrix = (matrixSolve (matrixGen4 rc) cc) 
-        {-
-            [[0]++top++[0]]++
-            [[left!!3]++r1++[right!!0],
-            [left!!2]++r2++[right!!1],
-            [left!!1]++r3++[right!!2],
-            [left!!0]++r4++[right!!3]]++
-            [[0]++bottom++[0]]
-        -}
-    in putStrLn [ if x == '0' then ' ' else x | x <- (showMatrix outputMatrix)]
+        outputMatrix = (appendStops (matrixSolve (matrixGen4 rc) cc) rc cc)
+    in 
+        putStrLn [ if x == '0' then ' ' else x | x <- (showMatrix outputMatrix)]
+
+-- takes in the matrix, row stops, column stops
+-- returns the matrix with the row and column stops appended
+appendStops :: [[Int]] -> [(Int,Int)] -> [(Int,Int)] -> [[Int]]
+appendStops mx rs cs =
+    let 
+        mx_trans = transpose mx
+    in 
+        let 
+            mx_imm = transpose [ [fst $ cs!!ind] ++ mx_trans!!ind ++ [snd $ cs!!ind] | ind <- [0..length cs - 1] ]
+        in 
+            [[0] ++ head mx_imm ++ [0]] ++ 
+            [ [fst $ rs!!ind] ++ mx_imm!!(ind + 1) ++ [snd $ rs!!ind] | ind <- [0..length rs - 1] ] ++ 
+            [[0] ++ last mx_imm ++ [0]]
+
 
 -- printMatrix code in reference to author's codepad: http://codepad.org/48Vxg7hZ
 -- author: https://stackoverflow.com/users/1106679/david
