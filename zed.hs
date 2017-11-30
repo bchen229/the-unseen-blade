@@ -75,6 +75,6 @@ row_stops (x,y) = zip x $ reverse y
 
 -- | get column stop pairs for validation (top, bottom)
 column_stops :: ([Int],[Int]) -> [(Int,Int)]
-column_stops (x,y) = zip (reverse y) x
+column_stops (x,y) = zip x (reverse y)
 
 matrix_gen :: Int -> [[Int]]
