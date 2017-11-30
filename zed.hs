@@ -69,11 +69,11 @@ validate list (f_stops,b_stops)
         && (trades (reverse list) 0 == b_stops) = True
     | otherwise = False
 
--- | get column stop pairs for validation
+-- | get row stop pairs for validation (left, right)
 row_stops :: ([Int],[Int]) -> [(Int,Int)]
 row_stops (x,y) = zip x $ reverse y
 
--- | get row stop pairs for validation
+-- | get column stop pairs for validation (top, bottom)
 column_stops :: ([Int],[Int]) -> [(Int,Int)]
 column_stops (x,y) = zip (reverse y) x
 
