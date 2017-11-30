@@ -35,7 +35,7 @@ Solution:
 
 1      4 1 3 2     3
 3      2 3 4 1     2
-2      3 2 4 1     1
+2      3 2 1 4     1
 2      1 4 2 3     2
 
        3 1 2 2
@@ -46,8 +46,12 @@ import Data.List
 -- comes in row form
 -- we can get columns with transpose [[Int]]
 -- use permutations [Int] to generate rows and check if conform
+-- zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
 zed :: ([Int],[Int],[Int],[Int]) -> [[Int]]
-zed ([1,3,2,2],[3,2,1,2],[2,2,1,3],[2,2,3,1]) = [[4,1,3,2],[2,3,4,1],[3,2,1,4],[1,4,2,3]]
+zed (top,right,bottom,left) = 
+    let rc = row_stops (left,right)
+        cc = col_stops (top,bottom)
+    in matrix_solve (matrix_gen_4 rc) cc 
 
 -- row stop = row_stop forth second
 -- column stop = column_stop first third
@@ -62,19 +66,44 @@ trades (a:b:t) sum
     | otherwise = sum + trades (maximum [a,b]:t) sum
 
 -- | validate row/colum to see if the trade stops are correct
--- It takes the row/column and the the stop pair for the row/column
+-- It takes the row/column and the the trade stop pair for the row/column
 validate :: [Int] -> (Int,Int) -> Bool
-validate list (f_stops,b_stops) 
-    | (trades list 0 == f_stops) 
-        && (trades (reverse list) 0 == b_stops) = True
+validate list (f,b) 
+    | (trades list 0 == f) 
+        && (trades (reverse list) 0 == b) = True
     | otherwise = False
 
--- | get row stop pairs for validation (left, right)
+-- | given a matrix and the coressponding list of stops, 
+-- validate that the condition is statisfied
+validate_matrix :: [[Int]] -> [(Int,Int)] -> Bool
+validate_matrix [] [] = True
+validate_matrix (x:xs) (s:ss)
+    | validate x s = validate_matrix xs ss
+    | otherwise = False
+
+-- | get trade stop pairs for row validation
 row_stops :: ([Int],[Int]) -> [(Int,Int)]
-row_stops (x,y) = zip x $ reverse y
+row_stops (x,y) = zip (reverse x) y
 
--- | get column stop pairs for validation (top, bottom)
-column_stops :: ([Int],[Int]) -> [(Int,Int)]
-column_stops (x,y) = zip x (reverse y)
+-- | get trade stop pairs for column validate
+col_stops :: ([Int],[Int]) -> [(Int,Int)]
+col_stops (x,y) = zip x $ reverse y
 
-matrix_gen :: Int -> [[Int]]
+-- | given a list of lists and a trade stop pair, 
+-- returns lists that would satisfy the condition
+list_select :: [[Int]] -> (Int,Int) -> [[Int]]
+list_select lists (f,b) = [ x | x <- lists, validate x (f,b) ]
+
+-- | takes in stop pairs generates a list of list of possible
+-- selection for each matrix row
+matrix_gen_4 :: [(Int,Int)] -> [[[Int]]]
+matrix_gen_4 pairs =
+    let p = [ x | x <- [ list_select (permutations [1..(length pairs)]) (f,b) | (f,b) <- pairs ] ]
+    in [ [a,b,c,d] | a <- p!!0, b <- p!!1, c <- p!!2, d <- p!!3 ]
+        
+-- | takes in a list of matrices and transposes and checks the stops constraints
+-- returns the correct matrix
+-- BUG HERE
+matrix_solve :: [[[Int]]] -> [(Int,Int)] -> [[Int]]
+matrix_solve matrices pairs = head ([ x | x <- matrices, validate_matrix (transpose x) pairs ])
+
