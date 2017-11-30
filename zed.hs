@@ -43,6 +43,18 @@ Solution:
 -}
 import Data.List
 
+matrixSize = 4
+
+possibleValues = [1..matrixSize]
+
+-- are we doing this for constraint propagation?
+newMatrix = [
+    [possibleValues, possibleValues, possibleValues, possibleValues],
+    [possibleValues, possibleValues, possibleValues, possibleValues],
+    [possibleValues, possibleValues, possibleValues, possibleValues],
+    [possibleValues, possibleValues, possibleValues, possibleValues]
+    ]
+
 -- comes in row form
 -- we can get columns with transpose [[Int]]
 -- use permutations [Int] to generate rows and check if conform
