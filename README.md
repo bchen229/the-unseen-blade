@@ -14,10 +14,10 @@ The rules are the following:
 - The merchants are not fools. They will not visit a trading post if it is worse than any of the others they have already visited. For example, a merchant will visit the trading posts 1,3,4,n in that order. However, if the 3 trading post preceeded the 1, then they would skip the 1 (and only visit the 3,4,n posts).
 - The only information the merchants will give you is the total number of posts they visit on their route.
 
-Implemented Bonus features:
-1) Allow maps of Zed or arbitrary size, i.e. any n×n map for n >= 2
-2) Display the output as a grid (not a list)
-3) Implement one or more solving strategies, so that your program tries to find a solution intelligently (rather than just brute force). This will allow the program to handle large or difficult puzzles
+For Additional functionality, we implemented 
+1. Maps of Zed of arbitrary size
+2. Display output as a grid (zed.hs implementation)
+3. Intelligent solving of the problem using constraints
 
 Further explanation can be found at: http://www.cs.sfu.ca/CourseCentral/383/pjj/a1.html
 
