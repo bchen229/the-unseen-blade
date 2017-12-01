@@ -14,7 +14,9 @@ The rules are the following:
 - The merchants are not fools. They will not visit a trading post if it is worse than any of the others they have already visited. For example, a merchant will visit the trading posts 1,3,4,n in that order. However, if the 3 trading post preceeded the 1, then they would skip the 1 (and only visit the 3,4,n posts).
 - The only information the merchants will give you is the total number of posts they visit on their route.
 
-For Additional functionality, we implemented 
+Further explanation can be found at: http://www.cs.sfu.ca/CourseCentral/383/pjj/a1.html
+
+## For Additional functionality, we implemented 
 1. Maps of Zed of arbitrary size
 2. Display output as a grid (zed.hs implementation)
 3. Intelligent solving of the problem using constraints
