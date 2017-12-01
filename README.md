@@ -17,7 +17,7 @@ The rules are the following:
 Further explanation can be found at: http://www.cs.sfu.ca/CourseCentral/383/pjj/a1.html
 
 
-For Additional functionality, we implemented 
+## For Additional functionality, we implemented 
 1. Maps of Zed of arbitrary size
 2. Display output as a grid (zed.hs implementation)
 3. Intelligent solving of the problem using constraints
