@@ -16,9 +16,14 @@ The rules are the following:
 
 Further explanation can be found at: http://www.cs.sfu.ca/CourseCentral/383/pjj/a1.html
 
-**
+
+For Additional functionality, we implemented 
+1. Maps of Zed of arbitrary size
+2. Display output as a grid (zed.hs implementation)
+3. Intelligent solving of the problem using constraints
+
+
 zed.hs generates the solution by first generating rows that match the conditions and then creating matrices of the rows.
 Then it would verify the matrices by applying the conditions on the columns. 
 
 zed2.hs first generates all permutations of matrices that do not have duplicate rows. Then applies conditions to the rows and columns, which is more of a brute force approach.
-**
